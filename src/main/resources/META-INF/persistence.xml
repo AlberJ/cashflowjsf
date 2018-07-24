@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0"
+	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+
+	<persistence-unit name="cashflow">
+
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+		<!-- <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider> 
+			<exclude-unlisted-classes>false</exclude-unlisted-classes> -->
+
+		<!-- <class>br.edu.ifpb.pweb2.model.Usuario</class> -->
+
+		<!-- <properties> <property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect" 
+			/> <property name="hibernate.connection.driver_class" value="org.hsqldb.jdbc.JDBCDriver" 
+			/> <property name="hibernate.hbm2ddl.auto" value="update" /> <property name="hibernate.connection.username" 
+			value="sa" /> <property name="hibernate.connection.password" value="" /> 
+			<property name="hibernate.connection.url" value="jdbc:hsqldb:hsql://localhost/cashflow" 
+			/> <property name="hibernate.showSql" value="true" /> <property name="hibernate.c3p0.acquire_increment" 
+			value="1" /> <property name="hibernate.c3p0.idle_test_period" value="100" 
+			/> <property name="hibernate.c3p0.max_size" value="10" /> <property name="hibernate.c3p0.max_statements" 
+			value="10" /> <property name="hibernate.c3p0.min_size" value="1" /> <property 
+			name="hibernate.c3p0.timeout" value="100" /> </properties> -->
+		<properties>
+			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/cashflow" />
+			<property name="javax.persistence.jdbc.user" value="postgres" />
+			<property name="javax.persistence.jdbc.password" value="123" />
+
+			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
+			<property name="hibernate.hbm2ddl.auto" value="update" />
+			<property name="hibernate.show_sql" value="false" />
+			<property name="hibernate.use_sql_comments" value="false" />
+			<property name="hibernate.format_sql" value="false" />
+		</properties>
+		<!-- ANTIGO -->
+	<!-- 	<properties>
+			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/cashflow" />
+			<property name="javax.persistence.jdbc.user" value="postgres" />
+			<property name="javax.persistence.jdbc.password" value="ifpb" />
+			<property name="javax.persistence.jdbc.password" value="123" />
+
+			<property name="eclipselink.ddl-generation" value="create-tables" />
+			<property name="eclipselink.ddl-generation.output-mode"
+				value="database" />
+			<property name="eclipselink.logging.level" value="fine" />
+			<property name="eclipselink.logging.file" value="log.txt" />
+		</properties> -->
+		<!-- FECHA ANTIGO -->
+
+		<!-- <properties> <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" 
+			/> <property name="javax.persistence.jdbc.url" value="jdbc:mysql://127.0.0.1:3306/cashflow" 
+			/> <property name="javax.persistence.jdbc.user" value="root" /> <property 
+			name="javax.persistence.jdbc.password" value="" /> <property name="eclipselink.ddl-generation" 
+			value="create-tables" /> <property name="eclipselink.ddl-generation.output-mode" 
+			value="database"/> <property name="eclipselink.logging.level" value="fine"/> 
+			<property name="eclipselink.logging.file" value="log.txt"/> </properties> -->
+
+	</persistence-unit>
+
+</persistence>
