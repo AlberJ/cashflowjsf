@@ -38,6 +38,14 @@ public class Usuario
 		this.movimentacoes = new ArrayList<Movimentacao>();
 	}
 	
+	public Usuario(String email, String login, String senha) {
+		this.email = email;
+		this.login = login;
+		this.senha = senha;
+		this.saldo = 0.0;
+		this.movimentacoes = new ArrayList<Movimentacao>();
+	}
+	
 	public Usuario() {
 //	PARA PERSISTENCIA 
 	}	

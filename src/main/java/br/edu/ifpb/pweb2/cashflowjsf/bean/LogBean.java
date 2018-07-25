@@ -9,71 +9,107 @@ import javax.servlet.http.HttpSession;
 import br.edu.ifpb.pweb2.cashflowjsf.dao.UsuarioDAO;
 import br.edu.ifpb.pweb2.cashflowjsf.model.Usuario;
 
-@ManagedBean(name="logBean")
+@ManagedBean(name = "logBean")
 @RequestScoped
-public class LogBean
-{
+public class LogBean {
 	FacesContext context = FacesContext.getCurrentInstance();
-	
+
 	private Usuario usuario;
 	private String senha;
 	private String login;
-	
+	private String email;
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public Usuario getUsuario() {
 		return usuario;
 	}
+
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
+
 	public String getSenha() {
 		return senha;
 	}
+
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
+
 	public String getLogin() {
 		return login;
 	}
+
 	public void setLogin(String login) {
 		this.login = login;
 	}
-	
-	public String realizaLogin()
-	{		
-		UsuarioDAO dao = new UsuarioDAO();	
-		try{
+
+	public String realizaLogin() {
+		UsuarioDAO dao = new UsuarioDAO();
+		try {
 			Usuario u = dao.findByLogin(login);
-			if(u != null){
-				if(u.getSenha().equals(senha)){
+			if (u != null) {
+				if (u.getSenha().equals(senha)) {
 					this.usuario = u;
-					
-//					COLOCAR USUARIO NA SESSÃO		
+
+					// COLOCAR USUARIO NA SESSÃO
 					HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
 					session.setAttribute("usuario", this.usuario);
-					
+
 					return "/usuario/home?faces-redirect=true";
 				}
 			}
-		}catch(Exception e){
-			erro("Login e/ou Senha não confere(m)!");
+		} catch (Exception e) {
+			erro("Login e/ou Senha não confere(m)!", "formLogin");
 			return null;
 		}
-	
-		erro("Login e/ou Senha não confere(m)!");
-		return null;	
-		
+
+		erro("Login e/ou Senha não confere(m)!", "formLogin");
+		return null;
+
 	}
-	
-	private void erro(String msg){
+
+	private void erro(String msg, String id) {
 		FacesMessage.Severity nivel = FacesMessage.SEVERITY_ERROR;
-		FacesMessage facesMsg = new FacesMessage (nivel, msg, null);
-		context.addMessage("formLogin", facesMsg);
+		FacesMessage facesMsg = new FacesMessage(nivel, msg, null);
+		context.addMessage(id, facesMsg);
 	}
-	
-	public String realizalogout()
-	{
+
+//	FALTA O INVALIDADE NA SESSÃO
+	public String realizalogout() {
 		HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
 		session.removeAttribute("usuario");
 		return "/login/logon?faces-redirect=true";
+	}
+
+	public String cadastro() {
+		UsuarioDAO dao = new UsuarioDAO();
+		try {
+			Usuario u = dao.findByLogin(login);
+			if (u != null) {
+				erro("Login já cadastrado!", "formCadastro:login");
+				return null;
+			}
+		} catch (Exception e) {
+			this.usuario = new Usuario(email, login, senha);
+			dao.beginTransaction();
+			dao.insert(usuario);
+			dao.commit();
+			// COLOCAR USUARIO NA SESSÃO
+			HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
+			session.setAttribute("usuario", this.usuario);
+
+			return "/usuario/home?faces-redirect=true";
+		}
+		
+		erro("Algum erro inesperado.", "formCadastro");
+		return null;
 	}
 }

@@ -42,7 +42,7 @@ public class UsuarioDAO extends GenericDAOJPAImpl<Usuario, Integer>
 		try {
 			u = (Usuario) q.getSingleResult();
 			
-		} catch (NoResultException e) {
+		} catch (Exception e) {
 			throw new DAOException("Usuário não existe!", e);
 		}
 		return u;
