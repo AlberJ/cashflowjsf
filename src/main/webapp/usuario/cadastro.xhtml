@@ -15,25 +15,25 @@
 	<h:message for="formCadastro" errorStyle="color:red;" />
 		<p>
 			<h:outputLabel value="Login" for="login" />
-			<h:inputText value="#{logBean.login}" id="login" required="true"/>
+			<h:inputText value="#{newUser.login}" id="login" required="true"/>
 			<h:message for="login" errorStyle="color:red;"/>
 		</p>
 		<p>
 			<h:outputLabel value="Email" for="email" />
-			<h:inputText value="#{logBean.email}" id="email" required="true">
+			<h:inputText value="#{newUser.email}" id="email" required="true">
 				<f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
 			</h:inputText>
 			<h:message for="email" errorStyle="color:red;"/>
 		</p>
 		<p>
 			<h:outputLabel value="Senha" for="senha" />
-			<h:inputSecret value="#{logBean.senha}" id="senha" required="true">
+			<h:inputSecret value="#{newUser.senha}" id="senha" required="true">
 				<f:validateLength minimum="3"/>
 			</h:inputSecret>
 			<h:message for="senha" errorStyle="color:red;"/>
 		</p>
 
-		<h:commandButton value="Cadastro-se" action="#{logBean.cadastro()}"/>
+		<h:commandButton value="Cadastro-se" action="#{newUser.cadastro()}"/>
 		<h:link value="Ir para login"
 			outcome="/login/logon" />
 

@@ -48,9 +48,6 @@ public class UsuarioDAO extends GenericDAOJPAImpl<Usuario, Integer>
 		return u;
 	}
 	
-	// Revisar o metodo abaixo.
-	// Esse metodo eh chamado na classe cashflow.controller.UsuarioController
-	
 	@SuppressWarnings("unchecked")
 	public List<Usuario> findAllFromUser(Usuario usuario) {
 		Query q = this.getEntityManager().createQuery("from Usuario u where u.usuario = :user");

@@ -1,30 +1,31 @@
 package br.edu.ifpb.pweb2.cashflowjsf.bean;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpSession;
+import javax.persistence.EntityManager;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-import br.edu.ifpb.pweb2.cashflowjsf.dao.UsuarioDAO;
+import br.edu.ifpb.pweb2.cashflowjsf.controller.LoginController;
+import br.edu.ifpb.pweb2.cashflowjsf.controller.Resultado;
 import br.edu.ifpb.pweb2.cashflowjsf.model.Usuario;
 
 @ManagedBean(name = "logBean")
 @RequestScoped
-public class LogBean {
-	FacesContext context = FacesContext.getCurrentInstance();
-
+public class LogBean extends GenericBean
+{
+	private String lembrar;
 	private Usuario usuario;
 	private String senha;
 	private String login;
-	private String email;
-
-	public String getEmail() {
-		return email;
+	
+	public String getLembrar() {
+		return lembrar;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setLembrar(String lembrar) {
+		this.lembrar = lembrar;
 	}
 
 	public Usuario getUsuario() {
@@ -51,65 +52,44 @@ public class LogBean {
 		this.login = login;
 	}
 
-	public String realizaLogin() {
-		UsuarioDAO dao = new UsuarioDAO();
-		try {
-			Usuario u = dao.findByLogin(login);
-			if (u != null) {
-				if (u.getSenha().equals(senha)) {
-					this.usuario = u;
-
-					// COLOCAR USUARIO NA SESSÃO
-					HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
-					session.setAttribute("usuario", this.usuario);
-
-					return "/usuario/home?faces-redirect=true";
+	public String realizaLogin() 
+	{
+		EntityManager EM = (EntityManager) session.getAttribute("currentEntityManager");
+		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+		HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
+		
+		LoginController controller = new LoginController(EM);
+		Resultado resultado = (Resultado) controller.isValido(this.login, this.senha);
+		
+		if(resultado.isErro()){
+			msgErro(resultado.getMensagem(), "formLogin");
+			return null;
+		}else{
+			usuario = (Usuario) resultado.getModel();
+			session.setAttribute("usuario", usuario);
+			
+			if (lembrar != null) {
+				Cookie c = new Cookie("loginCookie", usuario.getEmail());
+				c.setMaxAge(-1);
+				response.addCookie(c);
+			} else {
+				for (Cookie cookie : request.getCookies()) {
+					if (cookie.getName().equals("loginCookie")) {
+						cookie.setValue(null);
+						cookie.setMaxAge(0);
+						response.addCookie(cookie);
+					}
 				}
 			}
-		} catch (Exception e) {
-			erro("Login e/ou Senha não confere(m)!", "formLogin");
-			return null;
 		}
-
-		erro("Login e/ou Senha não confere(m)!", "formLogin");
-		return null;
-
+		return "/usuario/home?faces-redirect=true";
 	}
 
-	private void erro(String msg, String id) {
-		FacesMessage.Severity nivel = FacesMessage.SEVERITY_ERROR;
-		FacesMessage facesMsg = new FacesMessage(nivel, msg, null);
-		context.addMessage(id, facesMsg);
-	}
-
+	
 //	FALTA O INVALIDADE NA SESSÃO
 	public String realizalogout() {
-		HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
 		session.removeAttribute("usuario");
 		return "/login/logon?faces-redirect=true";
 	}
 
-	public String cadastro() {
-		UsuarioDAO dao = new UsuarioDAO();
-		try {
-			Usuario u = dao.findByLogin(login);
-			if (u != null) {
-				erro("Login já cadastrado!", "formCadastro:login");
-				return null;
-			}
-		} catch (Exception e) {
-			this.usuario = new Usuario(email, login, senha);
-			dao.beginTransaction();
-			dao.insert(usuario);
-			dao.commit();
-			// COLOCAR USUARIO NA SESSÃO
-			HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
-			session.setAttribute("usuario", this.usuario);
-
-			return "/usuario/home?faces-redirect=true";
-		}
-		
-		erro("Algum erro inesperado.", "formCadastro");
-		return null;
-	}
 }
