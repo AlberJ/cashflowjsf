@@ -27,16 +27,9 @@ public class MovimentacaoDAO extends GenericDAOJPAImpl<Movimentacao, Integer>
 	
 //	@SuppressWarnings("unchecked")
 	public List<Movimentacao> findAllFromUser(Usuario usuario) {
-		Query q = this.getEntityManager().createQuery(
-				"from Movimentacao m where m.usuario = :user");
-		q.setParameter("user", usuario);
-		return q.getResultList();
-	}
-	
-//	@SuppressWarnings("unchecked")
-	public List<Movimentacao> getMovimentacoes(Usuario usuario) {
 		Query q = this.getEntityManager().createQuery("from Movimentacao m where m.usuario = :user");
 		q.setParameter("user", usuario);
 		return q.getResultList();
 	}
+
 }

@@ -12,7 +12,6 @@
 </h:head>
 <h:body>
 	<h:form id="formLogin">
-
 		<h:message for="formLogin" errorStyle="color:red;" />
 		<br />
 		<p>
@@ -22,15 +21,15 @@
 		</p>
 		<p>
 			<h:outputLabel value="Senha: " for="senha" />
-			<h:inputSecret value="#{logBean.senha}" id="senha" required="true">
+			<h:inputSecret value="#{logBean.senha}" id="senha" >
 				<f:validateLength minimum="3" />
 			</h:inputSecret>
-			<h:message for="senha" errorStyle="color:red;" />
+			<h:message for="senha" errorStyle="color:red;"  />
 		</p>
 		
 		<h:commandButton action="#{logBean.realizaLogin}" value="Login" />
 
-		<h:link value="Ir para cadastro" outcome="/usuario/cadastro" />
+		<h:link value="Ir para cadastro" outcome="/usuario/cadastro?faces-redirect=true" />
 
 	</h:form>
 </h:body>

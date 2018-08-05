@@ -1,7 +1,6 @@
 package br.edu.ifpb.pweb2.cashflowjsf.bean;
 
 import javax.faces.bean.ManagedBean;
-import javax.persistence.EntityManager;
 
 import br.edu.ifpb.pweb2.cashflowjsf.controller.Resultado;
 import br.edu.ifpb.pweb2.cashflowjsf.controller.UsuarioController;
@@ -40,7 +39,6 @@ public class CadastroUserBean extends GenericBean
 
 	public String cadastro() 
 	{
-		EntityManager EM = (EntityManager) session.getAttribute("currentEntityManager");
 		UsuarioController controller = new UsuarioController(EM);
 		Resultado resultado = controller.cadastre(this.email, this.login, this.senha);
 		

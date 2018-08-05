@@ -1,27 +1,53 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:f="http://xmlns.jcp.org/jsf/core">
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 <h:head>
 	<title>Cash Flow</title>
-	
 </h:head>
 <h:body>
-	
-<h:outputText value="oi" /><br/>
 
-#{usuario.email}
-<br/>
-<h:form id="formSair">
-<h:commandButton action="#{logBean.realizalogout}" value="Sair"/>
+	<h:outputText
+		value="oi #{userBean.usuario.login}, seu saldo é R$ #{userBean.usuario.saldo}" />
+	<br />
 
+	<br />
+	<h:form id="formNavbar">
+		<h:link value="Nova Movimentação"
+			outcome="/movimentacao/movimentacao?faces-redirect=true" />
+		<h:commandButton action="#{logBean.realizalogout}" value="Sair" />
+	</h:form>
 
-</h:form>
-
-
+	<p>
+		<h:form id="formTabelaHome">
+			<h:message for="formTabelaHome" errorStyle="color:red;" />
+			
+			<h:dataTable value="#{userBean.movimentacoes}" var="movimentacao">
+				<h:column>
+					<f:facet name="header">Id para teste</f:facet> #{movimentacao.id}
+				</h:column>
+				<h:column>
+					<f:facet name="header">Valor</f:facet> #{movimentacao.valor}
+				</h:column>
+				<h:column>
+					<f:facet name="header">Descrição</f:facet> #{movimentacao.descricao}
+				</h:column>
+				<h:column>
+					<f:facet name="header">Tipo</f:facet>
+				------
+				</h:column>
+				<h:column>
+					<f:facet name="header">Ver</f:facet>
+					<h:commandLink value="Ver" action="#{userBean.ver(movimentacao)}" />
+				</h:column>
+			</h:dataTable>
+		</h:form>
+	</p>
 </h:body>
 </html>

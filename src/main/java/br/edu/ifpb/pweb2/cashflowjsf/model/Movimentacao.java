@@ -25,6 +25,7 @@ public class Movimentacao
 	private Usuario usuario;
 		
 	public Movimentacao(String descricao, double valor, boolean tipo) {
+		this.id_movimentacao = null;
 		this.descricao = descricao;
 		this.valor = valor;
 		this.operacao = tipo;
@@ -32,15 +33,6 @@ public class Movimentacao
 	
 	public Movimentacao() {
 //		PARA PRESISTENCIA
-	}
-	
-//	PARA QUANDO VIER DO BANCO DE DADOS
-	public Movimentacao(Integer id, Usuario usuario, String descricao, double valor, boolean tipo) {
-		this.id_movimentacao = id;
-		this.usuario = usuario;
-		this.descricao = descricao;
-		this.valor = valor;
-		this.operacao = tipo;
 	}
 	
 	public Integer getId() {
@@ -72,7 +64,7 @@ public class Movimentacao
 		this.valor = valor;
 	}
 	
-	public boolean getOperacao() {
+	public boolean isOperacao() {
 		return this.operacao;
 	}
 	
