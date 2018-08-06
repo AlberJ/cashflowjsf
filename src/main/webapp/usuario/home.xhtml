@@ -16,14 +16,16 @@
 		<ui:define name="ttitle">Home</ui:define>
 
 		<ui:define name="tbody">
-
+			<p><h1>Movimentações</h1></p>
 				<h:form id="formTabelaHome">
-				<p><h1>Movimentações</h1></p>
 				
 					<h:message for="formTabelaHome" errorStyle="color:red;" />
 					
-					<h:dataTable value="#{userBean.movimentacoes}" var="movimentacao"
+					<h:dataTable value="#{userBean.model}" var="movimentacao"
 						styleClass="table table-hover">
+						<h:column>
+							<f:facet name="header">#</f:facet> #{userBean.model.rowIndex +1}
+						</h:column>
 						<h:column>
 							<f:facet name="header">Id para teste</f:facet> #{movimentacao.id}
 						</h:column>
@@ -35,7 +37,8 @@
 						</h:column>
 						<h:column>
 							<f:facet name="header">Tipo</f:facet>
-				------
+							<h:outputText rendered="#{movimentacao.operacao == true}" value="Entrada" />
+							<h:outputText rendered="#{movimentacao.operacao == false}" value="Saída" />
 						</h:column>
 						<h:column>
 							<f:facet name="header">Ver</f:facet>

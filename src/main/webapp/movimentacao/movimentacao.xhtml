@@ -11,7 +11,7 @@
 </h:head>
 <h:body>
 	<ui:composition template="/template/_template.xhtml">
-		<ui:define name="ttitle">Nova Movimentação</ui:define>
+		<ui:define name="ttitle">Movimentação</ui:define>
 
 		<ui:define name="tbody">
 			<h:form id="formMovimentacao" styleClass="formulario">
@@ -21,17 +21,17 @@
 
 				<h:message for="formMovimentacao" errorStyle="color:red;" />
 				<p>
-					<h:outputText value="Id: #{movBean.id}" />
+					<h:outputText value="Id: #{movBean.movimentacao.id}" />
 				</p>
 				<div class="form-group">
 					<h:outputLabel value="Descrição" for="descricao" />
-					<h:inputTextarea value="#{movBean.desc}" id="descricao"
+					<h:inputTextarea value="#{movBean.movimentacao.descricao}" id="descricao"
 						required="false" styleClass="form-control" />
 					<h:message for="descricao" errorStyle="color:red;" />
 				</div>
 				<div class="form-group">
 					<h:outputLabel value="Valor" for="valor" />
-					<h:inputText value="#{movBean.valor}" id="valor" required="true"
+					<h:inputText value="#{movBean.movimentacao.valor}" id="valor" required="true"
 						styleClass="form-control">
 
 					</h:inputText>
@@ -40,7 +40,7 @@
 				<div class="form-group row">
 					<h:outputLabel value="Operação" for="operacao"
 						styleClass="col-form-label col-sm-2 pt-0" />
-					<h:selectOneRadio value="#{movBean.operacao}" id="operacao"
+					<h:selectOneRadio value="#{movBean.movimentacao.operacao}" id="operacao"
 						required="true">
 						<f:selectItem itemValue="true" itemLabel="Entrada" />
 						<f:selectItem itemValue="false" itemLabel="Saída" />

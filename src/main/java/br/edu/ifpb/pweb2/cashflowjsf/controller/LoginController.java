@@ -15,12 +15,8 @@ public class LoginController {
 	public Resultado isValido(String login, String senha) {
 		Resultado r = new Resultado();
 		r.setErro(false);
-		Usuario usuario = null;
-		
-		System.out.println("Carregou os parâmetros em isValido. login: "+login+", senha: "+senha); 
-			
+		Usuario usuario = null;	
 		UsuarioDAO udao = new UsuarioDAO(entityManager);
-		
 		try{
 			usuario = udao.findByLogin(login);
 			if (usuario != null) {

@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
 
 import br.edu.ifpb.pweb2.cashflowjsf.dao.MovimentacaoDAO;
+import br.edu.ifpb.pweb2.cashflowjsf.dao.UsuarioDAO;
 import br.edu.ifpb.pweb2.cashflowjsf.model.Movimentacao;
 import br.edu.ifpb.pweb2.cashflowjsf.model.Usuario;
 
@@ -24,13 +25,12 @@ public class MovimentacaoController {
 //		Movimentacao movimentacao = new Movimentacao(desc, Double.parseDouble(valor), operacao);
 				
 		try {
-//			UsuarioDAO udao = new UsuarioDAO(entityManager);
 			MovimentacaoDAO dao = new MovimentacaoDAO(entityManager);
 			dao.beginTransaction();
-//			usuario = udao.findByLogin(usuario.getLogin());
-			
+			UsuarioDAO udao = new UsuarioDAO(entityManager);
+			usuario = udao.findByLogin(usuario.getLogin());
+			movimentacao.setUsuario(usuario);
 			if(movimentacao.getId() == null){
-				movimentacao.setUsuario(usuario);
 				dao.insert(movimentacao);
 			}else{
 				dao.update(movimentacao);
@@ -38,8 +38,7 @@ public class MovimentacaoController {
 			
 			dao.commit();
 			resultado.setErro(false);
-			String m = "Movimentacao salvo com sucesso!";
-			resultado.addMensagens(m);
+			resultado.addMensagens("Movimentacao salvo com sucesso!");
 		} catch(Exception e) {
 			resultado.setErro(true);
 			resultado.setMensagens(this.mensagensErro);

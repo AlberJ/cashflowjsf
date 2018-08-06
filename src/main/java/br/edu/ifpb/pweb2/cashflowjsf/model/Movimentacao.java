@@ -18,13 +18,13 @@ public class Movimentacao
 	private Integer id_movimentacao;
 	
 	private String descricao;
-	private double valor;
+	private Double valor;
 	private boolean operacao; // FALSE SE SAIDA - TRUE SE ENTRADA
 	
 	@ManyToOne()
 	private Usuario usuario;
 		
-	public Movimentacao(String descricao, double valor, boolean tipo) {
+	public Movimentacao(String descricao, Double valor, boolean tipo) {
 		this.id_movimentacao = null;
 		this.descricao = descricao;
 		this.valor = valor;
@@ -37,6 +37,10 @@ public class Movimentacao
 	
 	public Integer getId() {
 		return this.id_movimentacao;
+	}
+	
+	public void setId(Integer id){
+		this.id_movimentacao = id;
 	}
 	
 	public Usuario getUsuario() {
@@ -56,7 +60,7 @@ public class Movimentacao
 		this.descricao = descricao;
 	}
 
-	public double getValor() {
+	public Double getValor() {
 		return valor;
 	}
 
@@ -64,7 +68,7 @@ public class Movimentacao
 		this.valor = valor;
 	}
 	
-	public boolean isOperacao() {
+	public boolean getOperacao() {
 		return this.operacao;
 	}
 	

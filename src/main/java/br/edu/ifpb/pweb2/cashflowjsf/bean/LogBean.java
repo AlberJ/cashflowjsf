@@ -52,10 +52,7 @@ public class LogBean extends GenericBean
 	}
 
 	public String realizaLogin() 
-	{
-//		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-//		HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
-		
+	{		
 		LoginController controller = new LoginController(EM);
 		Resultado resultado = (Resultado) controller.isValido(this.login, this.senha);
 		
@@ -65,20 +62,6 @@ public class LogBean extends GenericBean
 		}else{
 			usuario = (Usuario) resultado.getModel();
 			session.setAttribute("usuario", usuario);
-			
-//			if (lembrar != null) {
-//				Cookie c = new Cookie("loginCookie", usuario.getEmail());
-//				c.setMaxAge(-1);
-//				response.addCookie(c);
-//			} else {
-//				for (Cookie cookie : request.getCookies()) {
-//					if (cookie.getName().equals("loginCookie")) {
-//						cookie.setValue(null);
-//						cookie.setMaxAge(0);
-//						response.addCookie(cookie);
-//					}
-//				}
-//			}
 		}
 		return "/usuario/home?faces-redirect=true";
 	}

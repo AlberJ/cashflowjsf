@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.Flash;
+import javax.faces.model.DataModel;
+import javax.faces.model.ListDataModel;
 
 import br.edu.ifpb.pweb2.cashflowjsf.controller.MovimentacaoController;
 import br.edu.ifpb.pweb2.cashflowjsf.model.Movimentacao;
@@ -16,6 +18,8 @@ public class UserBean extends GenericBean
 	private MovimentacaoController movictrl; 
 	private Usuario usuario;
 	private ArrayList<Movimentacao> movimentacoes;
+	private DataModel<Movimentacao> model;
+	
 	
 	@PostConstruct
 	public void init(){
@@ -24,7 +28,16 @@ public class UserBean extends GenericBean
 		this.usuario = (Usuario) session.getAttribute("usuario");
 		if (usuario != null){
 			this.movimentacoes = (ArrayList<Movimentacao>) movictrl.getMovimentacoes(usuario);
+			model = new ListDataModel<Movimentacao>(movimentacoes);
 		}
+	}
+	
+	public DataModel<Movimentacao> getModel() {
+		return model;
+	}
+
+	public void setModel(DataModel<Movimentacao> model) {
+		this.model = model;
 	}
 
 	public Usuario getUsuario() {
@@ -47,16 +60,8 @@ public class UserBean extends GenericBean
 	{
 		Flash flash = context.getExternalContext().getFlash();
 		flash.put("movimentacao", movi);
-		
 		return "/movimentacao/movimentacao?faces-redirect=true";
 	}
-//	public String confirme() {
-//		Flash flash = FacesContext.getCurrentInstance()
-//		.getExternalContext().getFlash();
-//		flash.put("nome", nome);
-//		flash.put("sobrenome", sobrenome);
-//		flash.put("data", data);
-//		return "confirma?faces-redirect=true";
-//		}
+
 	
 }
