@@ -93,7 +93,8 @@ public class MovimentacaoController {
 		Resultado r = new Resultado();
 		try {
 			dao.beginTransaction();
-			dao.delete(movimentacao);
+			Movimentacao m = dao.find(movimentacao.getId());
+			dao.delete(m);
 			dao.commit();
 			r.setErro(false);	
 		} catch (PersistenceException e) {

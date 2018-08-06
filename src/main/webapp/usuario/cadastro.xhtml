@@ -7,36 +7,50 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 <h:head>
+	<title><ui:insert name="ttitle">Cash Flow</ui:insert></title>
+	<h:outputStylesheet library="bootstrap" name="css/bootstrap.css"
+		target="head" />
+	<h:outputStylesheet library="css" name="style_form.css" target="head" />
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<h:outputScript library="bootstrap" name="js/bootstrap.min.js"
+		target="body" />
+
 	<title>Cash Flow</title>
 
 </h:head>
 <h:body>
-	<h:form id="formCadastro">
-	<h:message for="formCadastro" errorStyle="color:red;" />
-		<p>
+
+	<h:form id="formCadastro" styleClass="formulario">
+		<p><h1>Cadastro</h1></p>
+		
+		<h:message for="formCadastro" errorStyle="color:red;" />
+		<div class="form-group">
 			<h:outputLabel value="Login" for="login" />
-			<h:inputText value="#{newUser.login}" id="login" required="true"/>
-			<h:message for="login" errorStyle="color:red;"/>
-		</p>
-		<p>
+			<h:inputText value="#{newUser.login}" id="login" required="true"
+				styleClass="form-control" />
+			<h:message for="login" errorStyle="color:red;" />
+		</div>
+		<div class="form-group">
 			<h:outputLabel value="Email" for="email" />
-			<h:inputText value="#{newUser.email}" id="email" required="true">
-				<f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+			<h:inputText value="#{newUser.email}" id="email" required="true" styleClass="form-control">
+				<f:validateRegex
+					pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
 			</h:inputText>
-			<h:message for="email" errorStyle="color:red;"/>
-		</p>
-		<p>
+			<h:message for="email" errorStyle="color:red;" />
+		</div>
+		<div class="form-group">
 			<h:outputLabel value="Senha" for="senha" />
-			<h:inputSecret value="#{newUser.senha}" id="senha" required="true">
-				<f:validateLength minimum="3"/>
+			<h:inputSecret value="#{newUser.senha}" id="senha" required="true" styleClass="form-control">
+				<f:validateLength minimum="3" />
 			</h:inputSecret>
-			<h:message for="senha" errorStyle="color:red;"/>
-		</p>
-
-		<h:commandButton value="Cadastro-se" action="#{newUser.cadastro()}"/>
-		<h:link value="Ir para login"
-			outcome="/login/logon?faces-redirect=true" />
-
+			<h:message for="senha" errorStyle="color:red;" />
+		</div>
+		<div class="form-group">
+			<h:commandButton value="Cadastro-se" action="#{newUser.cadastro()}" styleClass="btn btn-dark" style="margin-right: 20px;"/>
+			<h:button value="Login" styleClass="btn btn-outline-secondary" 
+				outcome="/login/logon?faces-redirect=true" />
+		</div>
 	</h:form>
 
 

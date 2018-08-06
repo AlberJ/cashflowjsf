@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:component>
+	<nav class="navbar navbar-light bg-light">
+	<div class="container">
+		<h:form id="navbar">
+			<ul class="nav">
+				<li class="nav-item"><h:link styleClass="navbar-brand"
+						outcome="/usuario/home?faces-redirect=true">Home</h:link></li>
+				
+				<li class="nav-item active"><h:link styleClass="nav-link"
+					outcome="/movimentacao/movimentacao?faces-redirect=true">Nova Movimentação</h:link></li>
+					
+				<h:outputText styleClass="nav-item nav-link" value="R$ #{userBean.usuario.saldo}" />
+				
+				<li class="nav-item"><h:commandLink
+						styleClass="nav-link disabled"
+						action="#{logBean.realizalogout()}">Sair</h:commandLink></li>
+			</ul>
+		</h:form>
+	</div>
+	</nav>
+</ui:component>
+</html>

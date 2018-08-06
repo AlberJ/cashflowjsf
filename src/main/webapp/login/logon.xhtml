@@ -7,30 +7,50 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 <h:head>
+
+	<title><ui:insert name="ttitle">Cash Flow</ui:insert></title>
+	<h:outputStylesheet library="bootstrap" name="css/bootstrap.css"
+		target="head" />
+	<h:outputStylesheet library="css" name="style_form.css" target="head" />
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<h:outputScript library="bootstrap" name="js/bootstrap.min.js"
+		target="body" />
+		
+		
 	<title>Cash Flow</title>
 
 </h:head>
 <h:body>
-	<h:form id="formLogin">
-		<h:message for="formLogin" errorStyle="color:red;" />
-		<br />
+	<h:form id="formLogin" styleClass="formulario">
 		<p>
-			<h:outputLabel value="Login: " for="login" />
-			<h:inputText value="#{logBean.login}" id="login" required="true"/>
-			<h:message for="login" errorStyle="color:red;" />
+			<h1>Login</h1>
 		</p>
-		<p>
+
+		<h:message for="formLogin" errorStyle="color:red;" />
+		<div class="form-group">
+			<h:outputLabel value="Login: " for="login" />
+			<h:inputText value="#{logBean.login}" id="login" required="true"
+				styleClass="form-control" />
+			<h:message for="login" errorStyle="color:red;" />
+		</div>
+		<div class="form-group">
 			<h:outputLabel value="Senha: " for="senha" />
-			<h:inputSecret value="#{logBean.senha}" id="senha" >
+			<h:inputSecret value="#{logBean.senha}" id="senha"
+				styleClass="form-control">
 				<f:validateLength minimum="3" />
 			</h:inputSecret>
-			<h:message for="senha" errorStyle="color:red;"  />
-		</p>
-		
-		<h:commandButton action="#{logBean.realizaLogin}" value="Login" />
+			<h:message for="senha" errorStyle="color:red;" />
+		</div>
 
-		<h:link value="Ir para cadastro" outcome="/usuario/cadastro?faces-redirect=true" />
+		<div class="form-group">
+			<h:commandButton action="#{logBean.realizaLogin}" value="Login"
+				styleClass="btn btn-dark" style="margin-right: 20px;" />
 
+			<h:button value="Cadastrar-se"
+				outcome="/usuario/cadastro?faces-redirect=true"
+				styleClass="btn btn-outline-secondary" />
+		</div>
 	</h:form>
 </h:body>
 </html>

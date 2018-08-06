@@ -1,11 +1,10 @@
 <style type="text/css">
 body {
 	margin: 0 auto;
-	/*background-color: #cc00cc;  #e1e1d0   85% */
 }
 
 .formulario {
-	margin: 50px 20%;
+	margin: 0 20%;
 	padding: 50px;
  	background-color: #ebebe0; /* 90% */
 	border-radius: 40px;

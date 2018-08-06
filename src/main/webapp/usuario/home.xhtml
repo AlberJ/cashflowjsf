@@ -12,42 +12,38 @@
 	<title>Cash Flow</title>
 </h:head>
 <h:body>
+	<ui:composition template="/template/_template.xhtml">
+		<ui:define name="ttitle">Home</ui:define>
 
-	<h:outputText
-		value="oi #{userBean.usuario.login}, seu saldo é R$ #{userBean.usuario.saldo}" />
-	<br />
+		<ui:define name="tbody">
 
-	<br />
-	<h:form id="formNavbar">
-		<h:link value="Nova Movimentação"
-			outcome="/movimentacao/movimentacao?faces-redirect=true" />
-		<h:commandButton action="#{logBean.realizalogout}" value="Sair" />
-	</h:form>
-
-	<p>
-		<h:form id="formTabelaHome">
-			<h:message for="formTabelaHome" errorStyle="color:red;" />
-			
-			<h:dataTable value="#{userBean.movimentacoes}" var="movimentacao">
-				<h:column>
-					<f:facet name="header">Id para teste</f:facet> #{movimentacao.id}
-				</h:column>
-				<h:column>
-					<f:facet name="header">Valor</f:facet> #{movimentacao.valor}
-				</h:column>
-				<h:column>
-					<f:facet name="header">Descrição</f:facet> #{movimentacao.descricao}
-				</h:column>
-				<h:column>
-					<f:facet name="header">Tipo</f:facet>
+				<h:form id="formTabelaHome">
+				<p><h1>Movimentações</h1></p>
+				
+					<h:message for="formTabelaHome" errorStyle="color:red;" />
+					
+					<h:dataTable value="#{userBean.movimentacoes}" var="movimentacao"
+						styleClass="table table-hover">
+						<h:column>
+							<f:facet name="header">Id para teste</f:facet> #{movimentacao.id}
+						</h:column>
+						<h:column>
+							<f:facet name="header">Valor</f:facet> #{movimentacao.valor}
+						</h:column>
+						<h:column>
+							<f:facet name="header">Descrição</f:facet> #{movimentacao.descricao}
+						</h:column>
+						<h:column>
+							<f:facet name="header">Tipo</f:facet>
 				------
-				</h:column>
-				<h:column>
-					<f:facet name="header">Ver</f:facet>
-					<h:commandLink value="Ver" action="#{userBean.ver(movimentacao)}" />
-				</h:column>
-			</h:dataTable>
-		</h:form>
-	</p>
+						</h:column>
+						<h:column>
+							<f:facet name="header">Ver</f:facet>
+							<h:commandLink value="Ver" action="#{userBean.ver(movimentacao)}" />
+						</h:column>
+					</h:dataTable>
+				</h:form>
+		</ui:define>
+	</ui:composition>
 </h:body>
 </html>

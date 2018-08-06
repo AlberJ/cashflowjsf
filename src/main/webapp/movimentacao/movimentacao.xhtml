@@ -8,42 +8,53 @@
 
 <h:head>
 	<title>Cash Flow</title>
-
 </h:head>
 <h:body>
+	<ui:composition template="/template/_template.xhtml">
+		<ui:define name="ttitle">Nova Movimentação</ui:define>
 
-	<h:form id="formMovimentacao">
-		<h:message for="formMovimentacao" errorStyle="color:red;" />
-		<p>
-			<h:outputText value="Id: #{movBean.id}" />
-		</p>
-		<p>
-			<h:outputLabel value="Descrição" for="descricao" />
-			<h:inputText value="#{movBean.desc}" id="descricao" required="false" />
-			<h:message for="descricao" errorStyle="color:red;" />
-		</p>
-		<p>
-			<h:outputLabel value="Valor" for="valor" />
-			<h:inputText value="#{movBean.valor}" id="valor" required="true">
+		<ui:define name="tbody">
+			<h:form id="formMovimentacao" styleClass="formulario">
+				<p>
+					<h1>Movimentação</h1>
+				</p>
 
-			</h:inputText>
-			<h:message for="valor" errorStyle="color:red;" />
-		</p>
-		<p>
-			<h:outputLabel value="Operação" for="operacao" />
-			<h:selectOneRadio value="#{movBean.operacao}" id="operacao"
-				required="true">
-				<f:selectItem itemValue="true" itemLabel="Entrada" />
-				<f:selectItem itemValue="false" itemLabel="Saída" />
-			</h:selectOneRadio>
-			<h:message for="operacao" errorStyle="color:red;" />
-		</p>
+				<h:message for="formMovimentacao" errorStyle="color:red;" />
+				<p>
+					<h:outputText value="Id: #{movBean.id}" />
+				</p>
+				<div class="form-group">
+					<h:outputLabel value="Descrição" for="descricao" />
+					<h:inputTextarea value="#{movBean.desc}" id="descricao"
+						required="false" styleClass="form-control" />
+					<h:message for="descricao" errorStyle="color:red;" />
+				</div>
+				<div class="form-group">
+					<h:outputLabel value="Valor" for="valor" />
+					<h:inputText value="#{movBean.valor}" id="valor" required="true"
+						styleClass="form-control">
 
-		<h:commandButton value="Salvar" action="#{movBean.salvar()}" />  
-		<h:link value="Voltar" outcome="/usuario/home?faces-redirect=true" />  
-		<h:commandButton value="Apagar" action="#{movBean.apagar()}" />
-	</h:form>
-
-
+					</h:inputText>
+					<h:message for="valor" errorStyle="color:red;" />
+				</div>
+				<div class="form-group row">
+					<h:outputLabel value="Operação" for="operacao"
+						styleClass="col-form-label col-sm-2 pt-0" />
+					<h:selectOneRadio value="#{movBean.operacao}" id="operacao"
+						required="true">
+						<f:selectItem itemValue="true" itemLabel="Entrada" />
+						<f:selectItem itemValue="false" itemLabel="Saída" />
+					</h:selectOneRadio>
+					<h:message for="operacao" errorStyle="color:red;" />
+				</div>
+				<div class="form-group">
+					<h:commandButton value="Salvar" action="#{movBean.salvar()}"
+						styleClass="btn btn-dark" style="margin-right: 20px;" />
+					<h:commandButton value="Apagar" action="#{movBean.apagar()}"
+						styleClass="btn btn-outline-secondary" />
+				</div>
+			</h:form>
+		</ui:define>
+	</ui:composition>
 </h:body>
 </html>
