@@ -7,21 +7,22 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 <ui:component>
-	<nav class="navbar navbar-light bg-light">
+	<nav class="navbar navbar-dark bg-dark">
 	<div class="container">
 		<h:form id="navbar">
 			<ul class="nav">
 				<li class="nav-item"><h:link styleClass="navbar-brand"
 						outcome="/usuario/home?faces-redirect=true">Home</h:link></li>
-				
-				<li class="nav-item active"><h:link styleClass="nav-link"
-					outcome="/movimentacao/movimentacao?faces-redirect=true">Nova Movimentação</h:link></li>
-					
-				<h:outputText styleClass="nav-item nav-link" value="R$ #{userBean.usuario.saldo}" />
-				
+
+				<li class="nav-item"><h:link styleClass="nav-link navbar-brand"
+						outcome="/movimentacao/movimentacao?faces-redirect=true">Nova Movimentação
+					</h:link></li>
+
+				<h:outputText styleClass="nav-item navbar-brand"
+					value="R$ #{userBean.usuario.saldo}" />
+
 				<li class="nav-item"><h:commandLink
-						styleClass="nav-link disabled"
-						action="#{logBean.realizalogout()}">Sair</h:commandLink></li>
+						styleClass="navbar-brand" action="#{logBean.realizalogout()}">Sair</h:commandLink></li>
 			</ul>
 		</h:form>
 	</div>

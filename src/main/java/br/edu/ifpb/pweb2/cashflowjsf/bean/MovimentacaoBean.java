@@ -2,6 +2,7 @@ package br.edu.ifpb.pweb2.cashflowjsf.bean;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.Flash;
 
 import br.edu.ifpb.pweb2.cashflowjsf.controller.MovimentacaoController;
@@ -10,11 +11,13 @@ import br.edu.ifpb.pweb2.cashflowjsf.model.Movimentacao;
 import br.edu.ifpb.pweb2.cashflowjsf.model.Usuario;
 
 @ManagedBean(name="movBean")
+@ViewScoped
 public class MovimentacaoBean extends GenericBean 
 {
 	private Usuario usuario;
-	private MovimentacaoController movictrl;
 	private Movimentacao movimentacao;
+	
+	private MovimentacaoController movictrl;
 	private Resultado resultado = new Resultado();
 	
 	@PostConstruct
@@ -27,11 +30,9 @@ public class MovimentacaoBean extends GenericBean
 		Movimentacao m = (Movimentacao) flash.get("movimentacao");		
 		if(m != null){
 			this.movimentacao = m;
-			System.out.println("Pegou movimentacao do flash. "+ movimentacao.toString());
 		}else {
-			System.out.println("Movimentacao vazia!");
 			this.movimentacao = new Movimentacao();
-		}
+		} 
 	}
 		
 	public Movimentacao getMovimentacao() {
@@ -58,7 +59,7 @@ public class MovimentacaoBean extends GenericBean
 	public String apagar()
 	{
 		System.out.println("Id da movimentação: "+movimentacao.getId());
-		resultado = movictrl.apagar(movimentacao);
+		resultado = movictrl.apagar(movimentacao, usuario);
 		if (resultado.isErro()){
 			msgErro(resultado.getMensagem(), "formMovimentacao");
 			return null;

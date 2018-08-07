@@ -19,26 +19,35 @@ public class MovimentacaoController {
 		this.entityManager = em;
 	}
 	
-	public Resultado cadastre(Usuario usuario, //String desc, String valor, boolean operacao ) {
-								Movimentacao movimentacao){
-		Resultado resultado = new Resultado();
-//		Movimentacao movimentacao = new Movimentacao(desc, Double.parseDouble(valor), operacao);
-				
+	public Resultado cadastre(Usuario usuario, Movimentacao movimentacao)
+	{
+		Resultado resultado = new Resultado();	
 		try {
 			MovimentacaoDAO dao = new MovimentacaoDAO(entityManager);
-			dao.beginTransaction();
 			UsuarioDAO udao = new UsuarioDAO(entityManager);
-			usuario = udao.findByLogin(usuario.getLogin());
-			movimentacao.setUsuario(usuario);
-			if(movimentacao.getId() == null){
-				dao.insert(movimentacao);
-			}else{
+			dao.beginTransaction();
+			
+			movimentacao.setUsuario(usuario);			
+//			atualiza movimentacao
+			if(movimentacao.getId() != null){ 
 				dao.update(movimentacao);
 			}
-			
+			else{ // A MOVIMENTAÇÃO É NOVA
+				dao.insert(movimentacao);
+				if(movimentacao.getOperacao()){
+					usuario.adicionarValor(movimentacao.getValor());
+				}else{
+					usuario.removerValor(movimentacao.getValor());
+				}
+			}	
 			dao.commit();
+			
+			udao.beginTransaction();
+			udao.update(usuario);
+			udao.commit();
+			
 			resultado.setErro(false);
-			resultado.addMensagens("Movimentacao salvo com sucesso!");
+			resultado.addMensagens("Movimentacao salva com sucesso!");
 		} catch(Exception e) {
 			resultado.setErro(true);
 			resultado.setMensagens(this.mensagensErro);
@@ -87,19 +96,28 @@ public class MovimentacaoController {
 		return r;
 	}
 	
-	public Resultado apagar(Movimentacao movimentacao) {
+	public Resultado apagar(Movimentacao movimentacao, Usuario usuario) {
 		MovimentacaoDAO dao = new MovimentacaoDAO(entityManager);
+		UsuarioDAO udao = new UsuarioDAO(entityManager);
 		Resultado r = new Resultado();
 		try {
 			dao.beginTransaction();
 			Movimentacao m = dao.find(movimentacao.getId());
+			if(m.getOperacao()){ // É ENTRADA
+				usuario.removerValor(m.getValor());
+			}else { // É SAÍDA
+				usuario.adicionarValor(m.getValor());
+			}
 			dao.delete(m);
 			dao.commit();
+			udao.beginTransaction();
+			udao.update(usuario);
+			udao.commit();
 			r.setErro(false);	
-		} catch (PersistenceException e) {
+		} catch (Exception e) {
 			dao.rollback();
 			r.setErro(true);
-			r.addMensagens("Erro ao excluir movimentacoes");
+			r.addMensagens("Erro ao excluir movimentação.");
 		}
 		return r;
 	}

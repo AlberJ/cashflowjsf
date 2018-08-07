@@ -29,14 +29,14 @@ public class Usuario
 	@OneToMany(mappedBy="usuario", cascade=CascadeType.ALL, orphanRemoval=true)
 	private List<Movimentacao> movimentacoes;
 	
-	public Usuario(int id, String email, String login, String senha) {
-		this.id_usuario = id;
-		this.email = email;
-		this.login = login;
-		this.senha = senha;
-		this.saldo = 0.0;
-		this.movimentacoes = new ArrayList<Movimentacao>();
-	}
+//	public Usuario(int id, String email, String login, String senha) {
+//		this.id_usuario = id;
+//		this.email = email;
+//		this.login = login;
+//		this.senha = senha;
+//		this.saldo = 0.0;
+//		this.movimentacoes = new ArrayList<Movimentacao>();
+//	}
 	
 	public Usuario(String email, String login, String senha) {
 		this.email = email;
@@ -97,6 +97,14 @@ public class Usuario
 	public void adicionarMovimentacao(Movimentacao m) {
 		m.opera();
 		this.movimentacoes.add(m);
+	}
+	
+	public void removerValor(Double v){
+		this.saldo -= v;
+	}
+	
+	public void adicionarValor(Double v){
+		this.saldo += v;
 	}
 	
 	@Override
