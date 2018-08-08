@@ -19,6 +19,8 @@ public class MovimentacaoBean extends GenericBean
 	
 	private MovimentacaoController movictrl;
 	private Resultado resultado = new Resultado();
+	private Double valorAntigo;
+	private boolean opAntigo;
 	
 	@PostConstruct
 	public void init()
@@ -30,6 +32,8 @@ public class MovimentacaoBean extends GenericBean
 		Movimentacao m = (Movimentacao) flash.get("movimentacao");		
 		if(m != null){
 			this.movimentacao = m;
+			valorAntigo = m.getValor();
+			opAntigo = m.getOperacao();
 		}else {
 			this.movimentacao = new Movimentacao();
 		} 
@@ -47,7 +51,7 @@ public class MovimentacaoBean extends GenericBean
 	{
 		try{
 			System.out.println("Id da movimentação: "+movimentacao.getId());
-			resultado = movictrl.cadastre(usuario, movimentacao);
+			resultado = movictrl.cadastre(usuario, movimentacao, valorAntigo, opAntigo);
 		}catch(Exception e){
 			msgErro(resultado.getMensagem(), "formMovimentacao");
 			return null;

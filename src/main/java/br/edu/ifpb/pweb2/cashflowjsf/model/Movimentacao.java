@@ -49,6 +49,7 @@ public class Movimentacao
 	
 	public void setUsuario(Usuario u) {
 		this.usuario = u;
+		this.opera();
 	}
 
 	public String getDescricao() {

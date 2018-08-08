@@ -19,7 +19,8 @@ public class MovimentacaoController {
 		this.entityManager = em;
 	}
 	
-	public Resultado cadastre(Usuario usuario, Movimentacao movimentacao)
+	public Resultado cadastre(Usuario usuario, Movimentacao movimentacao,
+							Double valorAntigo, boolean opAntigo)
 	{
 		Resultado resultado = new Resultado();	
 		try {
@@ -27,18 +28,22 @@ public class MovimentacaoController {
 			UsuarioDAO udao = new UsuarioDAO(entityManager);
 			dao.beginTransaction();
 			
-			movimentacao.setUsuario(usuario);			
-//			atualiza movimentacao
-			if(movimentacao.getId() != null){ 
+			movimentacao.setUsuario(usuario);	
+			
+//			ATUALIZA MOVIMENTAÇÃO
+			if(movimentacao.getId() != null){
+//				REMOVE A O VALOR DA MOVIMENTAÇÃO ANTIGA DO SALDO DO USUARIO
+				if(opAntigo)
+				{// MOVIMENTAÇÃO ANTIGA É ENTRADA 
+					usuario.removerValor(valorAntigo);
+				}
+				else { //MOVIMENTAÇÃO ANTIGO É SAÍDA
+					usuario.adicionarValor(valorAntigo);
+				}
 				dao.update(movimentacao);
 			}
 			else{ // A MOVIMENTAÇÃO É NOVA
 				dao.insert(movimentacao);
-				if(movimentacao.getOperacao()){
-					usuario.adicionarValor(movimentacao.getValor());
-				}else{
-					usuario.removerValor(movimentacao.getValor());
-				}
 			}	
 			dao.commit();
 			

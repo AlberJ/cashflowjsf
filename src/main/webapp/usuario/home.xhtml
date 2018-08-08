@@ -27,18 +27,15 @@
 							<f:facet name="header">#</f:facet> #{userBean.model.rowIndex +1}
 						</h:column>
 						<h:column>
-							<f:facet name="header">Id para teste</f:facet> #{movimentacao.id}
-						</h:column>
-						<h:column>
 							<f:facet name="header">Valor</f:facet> #{movimentacao.valor}
-						</h:column>
-						<h:column>
-							<f:facet name="header">Descrição</f:facet> #{movimentacao.descricao}
 						</h:column>
 						<h:column>
 							<f:facet name="header">Tipo</f:facet>
 							<h:outputText rendered="#{movimentacao.operacao == true}" value="Entrada" />
 							<h:outputText rendered="#{movimentacao.operacao == false}" value="Saída" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">Descrição</f:facet> #{movimentacao.descricao}
 						</h:column>
 						<h:column>
 							<f:facet name="header">Ver</f:facet>
